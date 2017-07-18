@@ -19,21 +19,42 @@ function TransitionBetweenOneColor(firstColor, secondColor, increment, incfunc){
   valDif['r'] = Math.abs(firstColor.r - secondColor.r)
   valDif['g'] = Math.abs(firstColor.g - secondColor.g)
   valDif['b'] = Math.abs(firstColor.b - secondColor.b)
+  console.log(valDif,"valdif");
   inc['r'] = valDif.r/increment
   inc['g'] = valDif.g/increment
   inc['b'] = valDif.b/increment
+  console.log(inc, "increment value");
   for (let key in valDif){
+    // console.log(key, "KEY IN DIFVAL");
     incfunc(firstColor[key], secondColor[key], inc[key], key)
   }
+
 }
 
 
 function incfunc(one,two, inc, color){
-  let array = [];
-  while(one<two){
-    one = Math.floor(one+inc)
-    array.push(one)
+// console.log(arguments);
 
+  let array = [];
+  if(one<two){
+    while(one<two){
+      one = one+inc;
+      if(two-one<inc){
+        one=two
+      }
+      let incrementValue = Math.floor(one)
+      array.push(incrementValue)
+    }
+  }
+  else if(two < one){
+    while(two < one){
+      one = one-inc;
+      if(one-two<inc){
+        one=two
+      }
+      let incrementValue = Math.floor(one)
+      array.push(incrementValue)
+    }
   }
   oneTransition[color] = array;
   console.log("the money", oneTransition);
@@ -43,7 +64,7 @@ TransitionBetweenOneColor({r:0, g:97, b:255}, {r:182, g:0, b:255}, 50, incfunc)
 })
 
 
-// 
+//
 //
 // var a = 182
 // var b = 97
